@@ -4,7 +4,11 @@ a dirty hack collection of cli scripts developed to work with rackspace api
 #rscloudfiles
 
 Features:
-
+- Add file or directory to Rackspace cloud files
+- Extract file to Rackspace cloud files
+- Show all Rackspace link and region
+ 
+Example Commands:
  -PUT  -F (content-type) (target file) (destination link)
 
   (e.g., ./rscloudfile -PUT -F application/x-gzip /home/XXX.tar.gz  https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
