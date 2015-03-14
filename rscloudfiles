@@ -1,9 +1,8 @@
 #!/bin/bash
+#V1 yorin
 
-#PUT YOUR RACKSPACE USERNME AND
-#API KEY ON THE FOLLOWING:
-USERNAME=''
-APIKEY=''
+USERNAME='' #INSERT YOUR RACKSPACE USERNAME HERE
+APIKEY='' #INSERT YOUT RACKSPACE APIKEY HERE
 
 function notvalid {
   echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
