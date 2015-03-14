@@ -1,0 +1,35 @@
+#!/bin/bash
+
+#PUT YOUR RACKSPACE USERNME AND
+#API KEY ON THE FOLLOWING:
+USERNAME=""
+APIKEY=""
+
+function notvalid {
+  echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
+  echo -e " -PUT  -F (content-type) (target file) (destination link)"
+  echo -e " -GET  -F -X (target file) (target link)"
+  exit
+}
+
+export PASS2="$1"
+if [ "$#" != "5" ]; then
+        notvalid
+else
+ TOKEN=$(curl -s -d  '<?xml version="1.0" encoding="UTF-8"?><auth><apiKeyCredentials xmlns="http://docs.rackspace.com/identity/api/ext/RAX-KSKEY/v1.0" username="$USERNAME" apiKey="$APIKEY"/></auth>' -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://identity.api.rackspacecloud.com/v2.0/tokens' | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/');
+ if [ "$PASS2" == "-PUT" ] && [ "$2" == '-F' ];
+ then
+        OUTPUT=$(curl -v -X PUT -T $4 -H "Content-Type: $3" -H "X-Auth-Token: $TOKEN" -k $5);
+	echo "$OUTPUT"
+	exit
+ elif [ "$PASS2" == "-GET" ] && [ "$2" == '-F' ]  && [ "$3" == '-X' ];
+ then
+	echo "GET $3 $4 $5"
+        OUTGET=$(curl -o $4 -H "X-Auth-Token: $TOKEN" -k $5\/$4);
+	echo "$OUTGET"
+	exit
+ else
+        notvalid
+ fi
+exit
+fi
