@@ -14,11 +14,9 @@ function notvalid {
 
 export PASS2="$1"
 if [ "$PASS2" == '-SHOWDRIVE' ]; then
-  #statements
   curl -s -d  '<?xml version="1.0" encoding="UTF-8"?><auth><apiKeyCredentials xmlns="http://docs.rackspace.com/identity/api/ext/RAX-KSKEY/v1.0" username="'$USERNAME'" apiKey="'$APIKEY'"/></auth>' -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://identity.api.rackspacecloud.com/v2.0/tokens' | grep -Po '<service type="object-store" name="cloudFiles">.*?</service>' |sed 's/\(<service type=\"object-store\" name=\"cloudFiles\">\|<\/service>\)//g'|grep -oP '<endpoint .*?\/>' |awk '{print $2,   $4}'
   exit
  elif [ "$#" != "5" ]; then
-   echo $PASS2
    notvalid
  else
    TOKEN=$(curl -s -d  '<?xml version="1.0" encoding="UTF-8"?><auth><apiKeyCredentials xmlns="http://docs.rackspace.com/identity/api/ext/RAX-KSKEY/v1.0" username="'$USERNAME'" apiKey="'$APIKEY'"/></auth>' -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://identity.api.rackspacecloud.com/v2.0/tokens' | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/');
@@ -32,7 +30,7 @@ if [ "$PASS2" == '-SHOWDRIVE' ]; then
 	   echo "$OUTGET"
 	   exit
    else
-        notvalid
+     notvalid
   fi
   exit
 fi
