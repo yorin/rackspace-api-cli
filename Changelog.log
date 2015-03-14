@@ -1,0 +1,15 @@
+rscloudfiles
+============
+Requirements:
+- Curl
+- Bash
+- Rackspace api version 1.0
+
+Changelog:
+3/15/2015 - Initial creation v1
+3/15/2015 - parsing Rackspace xml format
+3/15/2015 - PUT, GET, SHOWDRIVE feature
+3/16/2015 - v1.01
+3/16/2015 - Added -SHOWTOKEN feature
+3/16/2015 - Added USERNAME APIKEY error null handling
+3/16/2015 - Added Changelog
