@@ -19,10 +19,10 @@ Example Commands
 
   (e.g., ./rscloudfile -F -X  XXX.tar.gz https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
 
-  -SHOWDRIVE"
+  -SHOWDRIVE
 
   (e.g., ./rscloudfile -SHOWDRIVE)
 
-  -SHOWTOKEN"
+  -SHOWTOKEN
 
   (e.g., ./rscloudfile -SHOWTOKEN)
