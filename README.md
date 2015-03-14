@@ -7,6 +7,7 @@ Features:
 - Add file or directory to Rackspace cloud files
 - Extract file to Rackspace cloud files
 - Show all Rackspace link and region
+- Show generated token for whatever reason
  
 Example Commands
 
