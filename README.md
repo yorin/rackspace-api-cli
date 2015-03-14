@@ -22,3 +22,6 @@ Example Commands
 
   (e.g., ./rscloudfile -SHOWDRIVE)
 
+  -SHOWTOKEN"
+
+  (e.g., ./rscloudfile -SHOWTOKEN)
