@@ -8,16 +8,17 @@ Features:
 - Extract file to Rackspace cloud files
 - Show all Rackspace link and region
  
-Example Commands:
- -PUT  -F (content-type) (target file) (destination link)
+Example Commands
+
+  -PUT  -F (content-type) (target file) (destination link)
 
   (e.g., ./rscloudfile -PUT -F application/x-gzip /home/XXX.tar.gz  https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
 
- -GET  -F -X (target file) (target link)
+  -GET  -F -X (target file) (target link)
 
   (e.g., ./rscloudfile -F -X  XXX.tar.gz https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
 
- -SHOWDRIVE"
+  -SHOWDRIVE"
 
   (e.g., ./rscloudfile -SHOWDRIVE)
 
