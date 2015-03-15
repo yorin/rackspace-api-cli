@@ -8,6 +8,7 @@ Features:
 - Extract file to Rackspace cloud files
 - Show all Rackspace link and region
 - Show generated token for whatever reason
+- Show files/directory
  
 Example Commands
 
@@ -26,3 +27,9 @@ Example Commands
   -SHOWTOKEN
 
   (e.g., ./rscloudfile -SHOWTOKEN)
+
+  -SHOW -F -D -X (rackspace api link)
+
+  (e.g., ./rscloudfile -SHOW -F -D -X https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121)
+  (e.g., ./rscloudfile -SHOW -F -D -X https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1)
+
