@@ -30,6 +30,6 @@ Example Commands
 
   -SHOW -F -D -X (rackspace api link)
 
-  (e.g., ./rscloudfile -SHOW -F -D -X https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121)\n
+  (e.g., ./rscloudfile -SHOW -F -D -X https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121)  
   (e.g., ./rscloudfile -SHOW -F -D -X https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1)
 
