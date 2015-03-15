@@ -13,3 +13,4 @@ Changelog:
 3/16/2015 - Added -SHOWTOKEN feature
 3/16/2015 - Added USERNAME APIKEY error null handling
 3/16/2015 - Added Changelog
+3/17/2015 - Added -SHOW -F -D -X (rackspace api link)
