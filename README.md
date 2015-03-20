@@ -9,7 +9,7 @@ Features:
 - Show all Rackspace link and region
 - Show generated token for whatever reason
 - Show files/directory
-- Error prompt if username and api not detected
+- Error prompts if username and api not detected
  
 Example Commands
 
