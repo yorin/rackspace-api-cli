@@ -13,14 +13,16 @@ function notvalid {
   echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
   echo -e " -SHOWDRIVE"
   echo -e " -SHOWTOKEN"
-  echo -e " -SHOW (rackspace api link)"
+  echo -e " -SHOW -L (rackspace api link)"
   echo -e " -PUT  -X (content-type) -F (target file) -L (destination link)"
   echo -e " -GET  -F (target file) -L (target link)"
 }
 function curlmain {
   curl -s -d  '<?xml version="1.0" encoding="UTF-8"?><auth><apiKeyCredentials xmlns="http://docs.rackspace.com/identity/api/ext/RAX-KSKEY/v1.0" username="'$USERNAME'" apiKey="'$APIKEY'"/></auth>' -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://identity.api.rackspacecloud.com/v2.0/tokens'
 }
-
+function fetchtoken {
+     curlmain | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/'
+}
 if [ -z "$USERNAME" ] && [ -z "$APIKEY" ]; then
   userapi
   exit
@@ -31,19 +33,27 @@ elif [ "$PASS2" == '-SHOWTOKEN' ]; then
   curlmain | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/'
   exit
 else
-   if [ "$#" != "7" ] && [ "$PASS2" == "-PUT" ] && [ "$2" == '-X' ] && [ "$4" == '-F' ] && [ "$6" == '-X' ]; then
-     TOKEN=$(curlmain | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/');
+   if [ "$#" == "7" ] && [ "$PASS2" == "-PUT" ] && [ "$2" == '-X' ] && [ "$4" == '-F' ] && [ "$6" == '-L' ]; then
+     sleep 2
+     TOKEN=$(fetchtoken);
+     sleep 2
      OUTPUT=$(curl -v -X PUT -T $5 -H "Content-Type: $3" -H "X-Auth-Token: $TOKEN" -k $7);
+     sleep 2
      echo "$OUTPUT"
      exit
-   elif [ "$#" != "5" ] && [ "$PASS2" == "-GET" ] && [ "$2" == '-F' ] && [ "$4" == '-L' ]; then
-     TOKEN=$(curlmain | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/');
-     OUTGET=$(curl -o $4 -H "X-Auth-Token: $TOKEN" -k $5\/$3);
+   elif [ "$#" = "5" ] && [ "$PASS2" == "-GET" ] && [ "$2" == '-F' ] && [ "$4" == '-L' ]; then
+     sleep 2
+     TOKEN=$(fetchtoken);
+     sleep 2
+     OUTGET=$(curl -o $3 -H "X-Auth-Token: $TOKEN" -k $5\/$3);
+     sleep 2
      echo "$OUTGET"
      exit
-   elif [ "$#" != "2" ] && [ "$PASS2" == '-SHOW' ]; then
-     TOKEN=$(curlmain | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/');      
-     RSSHOW=$(curl -s -H 'Content-Type: application/xml' -H "X-Auth-Token: $TOKEN" -k $2?format=xml |grep -oP '<name>(.*?)<\/name>(.*?)<bytes>(.*?)<\/bytes>'|sed 's/<bytes>\(.*\)<\/bytes>/\1 bytes/g'|sed 's/<name>\(.*\)<\/name>/\1 /g'|sed 's/<content_type>\(.*\)<\/content_type>/\1 /g'|sed 's/<hash>\(.*\)<\/hash>//g'|sed 's/<count>\(.*\)<\/count>//g'|awk '{sbytes = $2/1048576; print sbytes " MB   "  $1"\n"}' |column -t);
+   elif [ "$#" = "3" ] && [ "$PASS2" == '-SHOW' ] && [ "$2" == '-L' ]; then
+     sleep 2
+     TOKEN=$(fetchtoken);
+     sleep 2
+     RSSHOW=$(curl -s -H 'Content-Type: application/xml' -H "X-Auth-Token: $TOKEN" -k $3?format=xml |grep -oP '<name>(.*?)<\/name>(.*?)<bytes>(.*?)<\/bytes>'|sed 's/<bytes>\(.*\)<\/bytes>/\1 bytes/g'|sed 's/<name>\(.*\)<\/name>/\1 /g'|sed 's/<content_type>\(.*\)<\/content_type>/\1 /g'|sed 's/<hash>\(.*\)<\/hash>//g'|sed 's/<count>\(.*\)<\/count>//g'|awk '{sbytes = $2/1048576; print sbytes " MB   "  $1"\n"}' |column -t);
      echo "$RSSHOW"
      exit
    else
