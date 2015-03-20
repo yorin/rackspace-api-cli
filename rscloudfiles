@@ -7,7 +7,7 @@ APIKEY='' #INSERT YOUT RACKSPACE APIKEY HERE
 export PASS2="$1"
 
 function userapi {
-echo -e " USERNAME APIKEY notvalid"
+  echo -e " USERNAME APIKEY notvalid"
 }
 function notvalid {
   echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
