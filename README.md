@@ -9,16 +9,17 @@ Features:
 - Show all Rackspace link and region
 - Show generated token for whatever reason
 - Show files/directory
+- Error prompt if username and api not detected
  
 Example Commands
 
-  -PUT  -F (content-type) (target file) (destination link)
+  -PUT  -X (content-type) -F (target file) -L (destination link)
 
-  (e.g., ./rscloudfile -PUT -F application/x-gzip /home/XXX.tar.gz  https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
+  (e.g., ./rscloudfile -PUT -X application/x-gzip -F XXX.tar.gz  -L https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
 
-  -GET  -F -X (target file) (target link)
+  -GET  -F (target file) -L (target link)
 
-  (e.g., ./rscloudfile -F -X  XXX.tar.gz https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
+  (e.g., ./rscloudfile -GET -F XXX.tar.gz -L https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1\/)
 
   -SHOWDRIVE
 
@@ -28,8 +29,7 @@ Example Commands
 
   (e.g., ./rscloudfile -SHOWTOKEN)
 
-  -SHOW -F -D -X (rackspace api link)
+  -SHOW -L (rackspace api link)
 
-  (e.g., ./rscloudfile -SHOW -F -D -X https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121)  
-  (e.g., ./rscloudfile -SHOW -F -D -X https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1)
-
+  (e.g., ./rscloudfile -SHOW -L https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121)  
+  (e.g., ./rscloudfile -SHOW -L https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1)
