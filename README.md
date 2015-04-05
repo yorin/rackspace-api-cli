@@ -10,6 +10,8 @@ Features:
 - Show generated token for whatever reason
 - Show files/directory
 - Error prompts if username and api not detected
+- Added file cache to cache token and initial directory  
+  data fetched from Rackspace
  
 Example Commands
 
