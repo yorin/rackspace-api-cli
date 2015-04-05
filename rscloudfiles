@@ -9,12 +9,12 @@ function userapi {
   echo -e ' USERNAME & APIKEY not empty'
 }
 function notvalid {
-  echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
-  echo -e " -SHOWDRIVE"
-  echo -e " -SHOWTOKEN"
-  echo -e " -SHOW -L (rackspace api link)"
-  echo -e " -PUT  -X (content-type) -F (target file) -L (destination link)"
-  echo -e " -GET  -F (target file) -L (target link)"
+  echo -e ' INVALID ARGUMENT! Usage of the script are as follows:'
+  echo -e ' -SHOWDRIVE'
+  echo -e ' -SHOWTOKEN'
+  echo -e ' -SHOW -L (rackspace api link)'
+  echo -e ' -PUT  -X (content-type) -F (target file) -L (destination link)'
+  echo -e ' -GET  -F (target file) -L (target link)'
 }
 function curlmain {
   if [ ! -d ".cache" ]; then
