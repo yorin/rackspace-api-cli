@@ -1,12 +1,12 @@
 #!/bin/bash
-#v1.03 yorin
+#v1.04 yorin
 
 USERNAME='' #INSERT YOUR RACKSPACE USERNAME HERE
 APIKEY='' #INSERT YOUT RACKSPACE APIKEY HERE
 export PASS2="$1"
 
 function userapi {
-  echo -e " USERNAME APIKEY notvalid"
+  echo -e ' USERNAME & APIKEY not empty'
 }
 function notvalid {
   echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
@@ -17,22 +17,42 @@ function notvalid {
   echo -e " -GET  -F (target file) -L (target link)"
 }
 function curlmain {
-  curl -s -d  '<?xml version="1.0" encoding="UTF-8"?><auth><apiKeyCredentials xmlns="http://docs.rackspace.com/identity/api/ext/RAX-KSKEY/v1.0" username="'$USERNAME'" apiKey="'$APIKEY'"/></auth>' -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://identity.api.rackspacecloud.com/v2.0/tokens'
+  if [ ! -d ".cache" ]; then
+    mkdir -p .cache
+  fi
+  curl -s -d  '<?xml version="1.0" encoding="UTF-8"?><auth><apiKeyCredentials xmlns="http://docs.rackspace.com/identity/api/ext/RAX-KSKEY/v1.0" username="'$USERNAME'" apiKey="'$APIKEY'"/></auth>' -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://identity.api.rackspacecloud.com/v2.0/tokens' > .cache/tokens.xml
 }
 function fetchtoken {
-     curlmain | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/'
+     cat .cache/tokens.xml | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/'
+}
+function checkexpire {
+  CDATEUTCEPOCH=$(date -u +%s) #UTC epoch datetime
+  if [ ! -f ".cache/tokens.xml" ] || [ ! -s ".cache/tokens.xml" ]; then
+   RSTDEXPIRE=0
+  else
+   RSTDEXPIRE=$(date --date=`cat .cache/tokens.xml |grep -o "<token id=".*" expires=".*"><tenant" |awk '{print $3}' |sed 's/ires=//' |sed 's/><tenant//' |sed 's/["]//g'|sed 's/exp//'` +%s)
+  fi
+   DIFF=$(($RSTDEXPIRE - $CDATEUTCEPOCH))
+   echo "DIFF: $DIFF"
+   echo "RSTDEXPIRE: $RSTDEXPIRE"
+   if [ "$DIFF" -le "0" ] || [ "$RSTDEXPIRE" -eq "0" ]; then 
+    curlmain
+   fi
 }
 if [ -z "$USERNAME" ] && [ -z "$APIKEY" ]; then
   userapi
   exit
 elif [ "$PASS2" == '-SHOWDRIVE' ]; then
-  curlmain | grep -Po '<service type="object-store" name="cloudFiles">.*?</service>' |sed 's/\(<service type=\"object-store\" name=\"cloudFiles\">\|<\/service>\)//g'|grep -oP '<endpoint .*?\/>' |awk '{print $2,   $4}'
+  checkexpire
+  cat .cache/tokens.xml | grep -Po '<service type="object-store" name="cloudFiles">.*?</service>' |sed 's/\(<service type=\"object-store\" name=\"cloudFiles\">\|<\/service>\)//g'|grep -oP '<endpoint .*?\/>' |awk '{print $2,   $4}'
   exit
 elif [ "$PASS2" == '-SHOWTOKEN' ]; then
-  curlmain | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/'
+  checkexpire
+  fetchtoken
   exit
 else
-   if [ "$#" == "7" ] && [ "$PASS2" == "-PUT" ] && [ "$2" == '-X' ] && [ "$4" == '-F' ] && [ "$6" == '-L' ]; then
+   if [ "$#" == "7" ] && [ "$PASS2" == "-PUT" ] && [ "$2" == '-X' ] && [ "$4" == '-F' ] && [ "$6" == '-L' ] && [ ! -z "$(fetchtoken)" ]; then
+     checkexpire
      sleep 2
      TOKEN=$(fetchtoken);
      sleep 2
@@ -40,7 +60,8 @@ else
      sleep 2
      echo "$OUTPUT"
      exit
-   elif [ "$#" = "5" ] && [ "$PASS2" == "-GET" ] && [ "$2" == '-F' ] && [ "$4" == '-L' ]; then
+   elif [ "$#" = "5" ] && [ "$PASS2" == "-GET" ] && [ "$2" == '-F' ] && [ "$4" == '-L' ] && [ ! -z "$(fetchtoken)" ]; then
+     checkexpire
      sleep 2
      TOKEN=$(fetchtoken);
      sleep 2
@@ -48,7 +69,8 @@ else
      sleep 2
      echo "$OUTGET"
      exit
-   elif [ "$#" = "3" ] && [ "$PASS2" == '-SHOW' ] && [ "$2" == '-L' ]; then
+   elif [ "$#" = "3" ] && [ "$PASS2" == '-SHOW' ] && [ "$2" == '-L' ] && [ ! -z "$(fetchtoken)" ]; then
+     checkexpire
      sleep 2
      TOKEN=$(fetchtoken);
      sleep 2
