@@ -11,7 +11,7 @@ Features:
 - Show files/directory
 - Error prompts if username and api not detected
 - Added file cache to cache token and initial directory  
-  data fetched from Rackspace
+  data fetched from Rackspace  
  
 Example Commands
 
