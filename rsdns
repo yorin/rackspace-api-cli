@@ -1,0 +1,60 @@
+#!/bin/bash
+#v1.00 yorin
+
+ USERNAME='' #INSERT YOUR RACKSPACE USERNAME HERE
+ APIKEY='' #INSERT YOUT RACKSPACE APIKEY HERE
+ export PASS2="$1"
+
+function userapi {
+  echo -e " USERNAME APIKEY notvalid"
+}
+function notvalid {
+  echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
+  echo -e " -SHOWTOKEN"
+  echo -e " -LISTDOMAINS"
+}
+function curlmain {
+  if [ ! -d ".cache" ]; then
+    mkdir -p .cache
+  fi
+  curl -s -d  '<?xml version="1.0" encoding="UTF-8"?><auth><apiKeyCredentials xmlns="http://docs.rackspace.com/identity/api/ext/RAX-KSKEY/v1.0" username="'$USERNAME'" apiKey="'$APIKEY'"/></auth>' -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://identity.api.rackspacecloud.com/v2.0/tokens' > .cache/tokens.xml
+}
+function fetchtoken {
+     cat .cache/tokens.xml | grep -o "<token .*><tenant" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/'
+}
+function fetchtenantid {
+     cat .cache/tokens.xml | grep -o "<tenant .*\/>" |awk  '{print $2}' | cut -c4-  | sed 's/^"\(.*\)"$/\1/'
+}
+function checkexpire {
+  if [ ! -f ".cache/tokens.xml" ] || [ ! -s ".cache/tokens.xml" ]; then
+   RSTDEXPIRE=0
+  else
+   RSTDEXPIRE=$(date --date=`cat .cache/tokens.xml |grep -o "<token id=".*" expires=".*"><tenant" |awk '{print $3}' |sed 's/ires=//' |sed 's/><tenant//' |sed 's/["]//g'|sed 's/exp//'` +%s)
+  fi
+   DIFF=$(($RSTDEXPIRE - $CDATEUTCEPOCH))
+   if [ "$DIFF" -le "0" ] || [ "$RSTDEXPIRE" -eq "0" ]; then 
+    curlmain
+   fi
+}
+if [ -z "$USERNAME" ] && [ -z "$APIKEY" ]; then
+  userapi
+  exit
+elif [ "$PASS2" == '-SHOWTOKEN' ]; then
+  checkexpire
+  fetchtoken
+  exit
+else
+   if [ "$PASS2" == '-LISTDOMAINS' ] && [ ! -z "$(fetchtoken)" ]; then
+     checkexpire
+     TENANTID=$(fetchtenantid)
+     TOKEN=$(fetchtoken);
+     OUTLIST=$(curl -s -H "X-Auth-Token: $TOKEN" -H "Accept: application/xml" 'https://dns.api.rackspacecloud.com/v1.0/'$TENANTID'/domains' | grep -oP '<domain id=.*?\/>'|awk '{print $2,$3,$4,$5,$6}'|sed 's/["]//g'|column -t)
+     echo "$OUTLIST"
+     exit
+   else
+     notvalid
+     exit
+   fi
+   exit
+fi
+exit
