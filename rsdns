@@ -32,7 +32,7 @@ function checkexpire {
    RSTDEXPIRE=$(date --date=`cat .cache/tokens.xml |grep -o "<token id=".*" expires=".*"><tenant" |awk '{print $3}' |sed 's/ires=//' |sed 's/><tenant//' |sed 's/["]//g'|sed 's/exp//'` +%s)
   fi
    DIFF=$(($RSTDEXPIRE - $CDATEUTCEPOCH))
-   if [ "$DIFF" -le "0" ] || [ "$RSTDEXPIRE" -eq "0" ]; then 
+   if [ "$DIFF" -le "0" ] || [ "$RSTDEXPIRE" -eq "0" ]; then
     curlmain
    fi
 }
