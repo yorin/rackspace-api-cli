@@ -1,5 +1,8 @@
 # rackspace-api-cli
-a dirty hack collection of cli scripts developed to work with rackspace api
+a dirty hack collection of cli scripts developed to work with rackspace api  
+
+Disclaimer:  
+This is an unofficial, created without Rackspace's official support.  
 
 #rscloudfiles
 
