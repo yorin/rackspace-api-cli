@@ -33,8 +33,6 @@ function checkexpire {
    RSTDEXPIRE=$(date --date=`cat .cache/tokens.xml |grep -o "<token id=".*" expires=".*"><tenant" |awk '{print $3}' |sed 's/ires=//' |sed 's/><tenant//' |sed 's/["]//g'|sed 's/exp//'` +%s)
   fi
    DIFF=$(($RSTDEXPIRE - $CDATEUTCEPOCH))
-   echo "DIFF: $DIFF"
-   echo "RSTDEXPIRE: $RSTDEXPIRE"
    if [ "$DIFF" -le "0" ] || [ "$RSTDEXPIRE" -eq "0" ]; then 
     curlmain
    fi
@@ -53,28 +51,23 @@ elif [ "$PASS2" == '-SHOWTOKEN' ]; then
 else
    if [ "$#" == "7" ] && [ "$PASS2" == "-PUT" ] && [ "$2" == '-X' ] && [ "$4" == '-F' ] && [ "$6" == '-L' ] && [ ! -z "$(fetchtoken)" ]; then
      checkexpire
-     sleep 2
      TOKEN=$(fetchtoken);
-     sleep 2
      OUTPUT=$(curl -v -X PUT -T $5 -H "Content-Type: $3" -H "X-Auth-Token: $TOKEN" -k $7);
      sleep 2
      echo "$OUTPUT"
      exit
    elif [ "$#" = "5" ] && [ "$PASS2" == "-GET" ] && [ "$2" == '-F' ] && [ "$4" == '-L' ] && [ ! -z "$(fetchtoken)" ]; then
      checkexpire
-     sleep 2
      TOKEN=$(fetchtoken);
-     sleep 2
      OUTGET=$(curl -o $3 -H "X-Auth-Token: $TOKEN" -k $5\/$3);
      sleep 2
      echo "$OUTGET"
      exit
    elif [ "$#" = "3" ] && [ "$PASS2" == '-SHOW' ] && [ "$2" == '-L' ] && [ ! -z "$(fetchtoken)" ]; then
      checkexpire
-     sleep 2
      TOKEN=$(fetchtoken);
-     sleep 2
      RSSHOW=$(curl -s -H 'Content-Type: application/xml' -H "X-Auth-Token: $TOKEN" -k $3?format=xml |grep -oP '<name>(.*?)<\/name>(.*?)<bytes>(.*?)<\/bytes>'|sed 's/<bytes>\(.*\)<\/bytes>/\1 bytes/g'|sed 's/<name>\(.*\)<\/name>/\1 /g'|sed 's/<content_type>\(.*\)<\/content_type>/\1 /g'|sed 's/<hash>\(.*\)<\/hash>//g'|sed 's/<count>\(.*\)<\/count>//g'|awk '{sbytes = $2/1048576; print sbytes " MB   "  $1"\n"}' |column -t);
+     sleep 2
      echo "$RSSHOW"
      exit
    else
