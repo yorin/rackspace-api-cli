@@ -6,14 +6,15 @@ Requirements:
 - Rackspace api version 1.02
 
 Changelog:
-03/15/2015 - Initial creation v1
-03/15/2015 - parsing Rackspace xml format
-03/15/2015 - PUT, GET, SHOWDRIVE feature
-03/16/2015 - v1.01
-03/16/2015 - Added -SHOWTOKEN feature
-03/16/2015 - Added USERNAME APIKEY error null handling
-03/16/2015 - Added Changelog
-03/17/2015 - Added -SHOW -F -D -X (rackspace api link) v1.02
-03/20/2015 - v1.03 Code modifications also input handling changes no new features.
-04/05/2015 - v1.04 added 24hr file cache to curlmain function; to reduce frequent fetching for Token data.  
-
+03/15/2015 - rscloudfiles Initial creation v1
+03/15/2015 - rscloudfiles parsing Rackspace xml format
+03/15/2015 - rscloudfiles PUT, GET, SHOWDRIVE feature
+03/16/2015 - rscloudfiles v1.01
+03/16/2015 - rscloudfiles Added -SHOWTOKEN feature
+03/16/2015 - rscloudfiles Added USERNAME APIKEY error null handling
+03/16/2015 - rscloudfiles Added Changelog
+03/17/2015 - rscloudfiles Added -SHOW -F -D -X (rackspace api link) v1.02
+03/20/2015 - rscloudfiles v1.03 Code modifications also input handling changes no new features.
+04/05/2015 - rscloudfiles v1.04 added 24hr file cache to curlmain function; to reduce frequent fetching for Token data.  
+04/06/2015 - rsdns v1.00 added rsdns script for rackspace dns api, tool -SHOWDOMAINS 
+04/07/2015 - rsdns v1.00 added -DOMAINSID tool used for showing domain details  
