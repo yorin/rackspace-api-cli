@@ -18,3 +18,5 @@ Changelog:
 04/05/2015 - rscloudfiles v1.04 added 24hr file cache to curlmain function; to reduce frequent fetching for Token data.  
 04/06/2015 - rsdns v1.00 added rsdns script for rackspace dns api, tool -SHOWDOMAINS 
 04/07/2015 - rsdns v1.00 added -DOMAINSID tool used for showing domain details  
+  
+  
