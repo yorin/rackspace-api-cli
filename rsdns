@@ -12,6 +12,7 @@ function notvalid {
   echo -e " INVALID ARGUMENT! Usage of the script are as follows:"
   echo -e " -SHOWTOKEN"
   echo -e " -LISTDOMAINS"
+  echo -e " -DOMAINID"
 }
 function curlmain {
   if [ ! -d ".cache" ]; then
@@ -50,6 +51,13 @@ else
      TOKEN=$(fetchtoken);
      OUTLIST=$(curl -s -H "X-Auth-Token: $TOKEN" -H "Accept: application/xml" 'https://dns.api.rackspacecloud.com/v1.0/'$TENANTID'/domains' | grep -oP '<domain id=.*?\/>'|awk '{print $2,$3,$4,$5,$6}'|sed 's/["]//g'|column -t)
      echo "$OUTLIST"
+     exit
+   elif [ "$PASS2" == '-DOMAINID' ] && [ ! -z "$2" ] && [ ! -z "$(fetchtoken)" ]; then
+     checkexpire
+     TENANTID=$(fetchtenantid)
+     TOKEN=$(fetchtoken)
+     OUTLIST2=$(curl -s -H "X-Auth-Token: $TOKEN" -H "Accept: application/xml" 'https://dns.api.rackspacecloud.com/v1.0/'$TENANTID'/domains/'$DOMAINSID | grep -oP '<record id=.*?\/>'|awk '{print $2,$3,$4,$5,$6}'|sed 's/["]//g'|column -t)
+     echo "$OUTLIST2"
      exit
    else
      notvalid
