@@ -19,4 +19,4 @@ Changelog:
 04/06/2015 - rsdns v1.00 added rsdns script for rackspace dns api, tool -SHOWDOMAINS 
 04/07/2015 - rsdns v1.00 added -DOMAINSID tool used for showing domain details  
 04/07/2015 - rsdns v1.00 added -DELETE tool used for showing domain details  
-  
+04/13/2015 - rsdns v1.00 added -CREATEDOM tool used for creating domains  
