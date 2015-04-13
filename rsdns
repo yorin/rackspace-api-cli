@@ -14,6 +14,8 @@ function notvalid {
   echo -e " -LISTDOMAINS"
   echo -e " -DOMAINID (domain id)"
   echo -e " -DELETE (domain id)"
+  echo -e " -CREATEDOM  -n (domain.com) -t (ttl value)"
+
 }
 function curlmain {
   if [ ! -d ".cache" ]; then
@@ -68,6 +70,13 @@ else
      echo "$DOMAINSID"
      OUTLIST3=$(curl -X DELETE -H "X-Auth-Token: yourAuthToken" -H "Accept: application/xml" 'https://dns.api.rackspacecloud.com/v1.0/'$TENANTID'/domains/'$DOMAINSIDEL)
      echo "$OUTLIST3"
+     exit
+   elif [ "$PASS2" == '-CREATEDOM' ] && [ "$2" == '-n' ] && [ "$4" == '-t' ] && [ ! -z "$(fetchtoken)" ]; then
+     checkexpire
+     TENANTID=$(fetchtenantid)
+     TOKEN=$(fetchtoken)
+     OUTLIST4=$(curl -D - -X POST -d '<domains xmlns="http://docs.rackspacecloud.com/dns/api/v1.0"><domain name="' $3 '" ttl="' $5 '"></domain></domains>' -H "X-Auth-Token: $TOKEN" -H "Content-Type: application/xml" -H 'Accept: application/xml' 'https://dns.api.rackspacecloud.com/v1.0/'$TENANTID'/domains')
+     echo "$OUTLIST4"
      exit
    else
      notvalid
