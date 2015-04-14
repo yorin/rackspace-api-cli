@@ -15,7 +15,7 @@ function notvalid {
   echo -e " -DOMAINID (domain id)"
   echo -e " -DELETE (domain id)"
   echo -e " -CREATEDOM  -n (domain.com) -t (ttl value)"
-
+  echo -e " -CREATEREG  -ty (A,CNAME) -n (domain or subdomain name) -ip (ip address) -t (ttl value) -did (domain id)"
 }
 function curlmain {
   if [ ! -d ".cache" ]; then
@@ -78,6 +78,13 @@ else
      OUTLIST4=$(curl -D - -X POST -d '<domains xmlns="http://docs.rackspacecloud.com/dns/api/v1.0"><domain name="' $3 '" ttl="' $5 '"></domain></domains>' -H "X-Auth-Token: $TOKEN" -H "Content-Type: application/xml" -H 'Accept: application/xml' 'https://dns.api.rackspacecloud.com/v1.0/'$TENANTID'/domains')
      echo "$OUTLIST4"
      exit
+   elif [ "$PASS2" == '-CREATEREG' ] && [ "$2" == '-ty' ] && [ "$4" == '-n' ] && [ "$6" == '-ip' ] && [ "$8" == '-t' ] && [ "${10}" == '-did' ] && [ ! -z "$(fetchtoken)" ]; then
+     checkexpire
+     TENANTID=$(fetchtenantid)
+     TOKEN=$(fetchtoken)
+     OUTLIST5=$(curl -D - -X POST -d  '<?xml version="1.0" ?><recordsList xmlns:ns2="http://docs.rackspacecloud.com/dns/api/management/v1.0" xmlns="http://docs.rackspacecloud.com/dns/api/v1.0" xmlns:ns3="http://www.w3.org/2005/Atom"><record type="' $3 '" name="' $5 '" data="' $7 '" ttl="' $9 '"/></recordsList>' -H "X-Auth-Token: $TOKEN" -H 'Content-Type: application/xml' -H 'Accept: application/xml' 'https://dns.api.rackspacecloud.com/v1.0/' $TENANTID '/domains/' ${11} '/records')
+     echo "$OUTLIST5"
+     exit     
    else
      notvalid
      exit
