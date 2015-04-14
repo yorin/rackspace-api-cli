@@ -1,23 +1,45 @@
-rscloudfiles
-============
-Requirements:
-- Curl
-- Bash
-- Rackspace api version 1.02
-
-Changelog:
+v1.00 Changelog:
+================
 03/15/2015 - rscloudfiles Initial creation v1
 03/15/2015 - rscloudfiles parsing Rackspace xml format
 03/15/2015 - rscloudfiles PUT, GET, SHOWDRIVE feature
+
+v1.01 Changelog:
+================
 03/16/2015 - rscloudfiles v1.01
 03/16/2015 - rscloudfiles Added -SHOWTOKEN feature
 03/16/2015 - rscloudfiles Added USERNAME APIKEY error null handling
 03/16/2015 - rscloudfiles Added Changelog
 03/17/2015 - rscloudfiles Added -SHOW -F -D -X (rackspace api link) v1.02
+
+v1.03 Changelog:
+================
 03/20/2015 - rscloudfiles v1.03 Code modifications also input handling changes no new features.
-04/05/2015 - rscloudfiles v1.04 added 24hr file cache to curlmain function; to reduce frequent fetching for Token data.  
-04/06/2015 - rsdns v1.00 added rsdns script for rackspace dns api, tool -SHOWDOMAINS 
-04/07/2015 - rsdns v1.00 added -DOMAINSID tool used for showing domain details  
-04/07/2015 - rsdns v1.00 added -DELETE tool used for showing domain details  
-04/13/2015 - rsdns v1.00 added -CREATEDOM tool used for creating domains  
-04/14/2015 - rsdns v1.00 added -CREATEREG tool used for adding domain records
+
+v1.04 Changelog:
+================
+04/05/2015 - rscloudfiles added 24hr file cache to curlmain function; to reduce frequent fetching for Token data.  
+04/06/2015 - rsdns introduction for rackspace dns api usage. 
+04/06/2015 - rsdns added -SHOWDOMAINS tool used to list all domain names created.
+04/07/2015 - rsdns added -DOMAINSID tool used for showing domain details  
+04/07/2015 - rsdns added -DELETE tool used for showing domain details  
+04/13/2015 - rsdns added -CREATEDOM tool used for creating domains  
+04/14/2015 - rsdns added -CREATEREG tool used for adding domain records
+04/14/2015 - created ./cache/rs.conf to centralize storing of  USERNAME & APIKEY values, 
+             update rsdns and rscloudfiles to it as well.
+
+
+rscloufiles requirements:
+=========================
+- Curl
+- Bash
+- Rackspace api version 1.02
+- USERNAME and APIKEY value stored on .cache/rs.conf
+
+rsdns requriements:
+===================
+- Curl
+- Bash
+- Rackspace api version 1.02
+- USERNAME and APIKEY value stored on .cache/rs.conf
+

@@ -1,12 +1,11 @@
 #!/bin/bash
-#v1.04 yorin
+#yorin
+source .cache/rs.conf
 
- USERNAME='' #INSERT YOUR RACKSPACE USERNAME HERE
- APIKEY='' #INSERT YOUT RACKSPACE APIKEY HERE
  export PASS2="$1"
 
 function userapi {
- echo -e ' USERNAME & APIKEY not empty'
+ echo -e ' USERNAME & APIKEY in .cache/rs.conf is empty'
 }
 function notvalid {
  echo -e ' INVALID ARGUMENT! Usage of the script are as follows:'

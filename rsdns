@@ -1,8 +1,7 @@
 #!/bin/bash
-#v1.00 yorin(beta)
+#yorin
+source .cache/rs.conf
 
- USERNAME='' #INSERT YOUR RACKSPACE USERNAME HERE
- APIKEY='' #INSERT YOUT RACKSPACE APIKEY HERE
  export PASS2="$1"
 
 function userapi {
