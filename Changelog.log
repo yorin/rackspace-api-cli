@@ -20,3 +20,4 @@ Changelog:
 04/07/2015 - rsdns v1.00 added -DOMAINSID tool used for showing domain details  
 04/07/2015 - rsdns v1.00 added -DELETE tool used for showing domain details  
 04/13/2015 - rsdns v1.00 added -CREATEDOM tool used for creating domains  
+04/14/2015 - rsdns v1.00 added -CREATEREG tool used for adding domain records
