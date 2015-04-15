@@ -38,3 +38,38 @@ Example Commands
 
   (e.g., ./rscloudfile -SHOW -L https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121)  
   (e.g., ./rscloudfile -SHOW -L https:\/\/rs.clouddrive.com\/v1\/MossoCloudFS_1212121\/Folder1)
+
+#rsdns
+
+Features:
+- Search DNS created
+- Create DNS
+- Delete DNS
+- SHOW DNS ID
+ 
+Example Commands
+  
+  -SHOWTOKEN  
+  
+  (e.g., ./rsdns -SHOWTOKEN)  
+  
+  -LISTDOMAINS"  
+  
+  (e.g., ./rsdns -LISTDOMAINS)  
+  
+  -DOMAINID (domain id)"  
+  
+  (e.g., ./rsdns -DOMAINID 3456127)  
+  
+  -DELETE (domain id)"
+
+  (e.g., ./rsdns -DELETE 3456127)  
+  
+  -CREATEDOM  -n (domain.com) -t (ttl value)"  
+
+  (e.g., ./rsdns -CREATEDOM -n domain.com -t 84600)  
+  
+  -CREATEREG  -ty (A,CNAME) -n (domain or subdomain name) -ip (ip address) -t (ttl value) -did (domain id)"  
+  
+  (e.g., ./rsdns -CREATEREG -ty A -n domain.com -ip 127.0.0.1 -t 84600 -did 3456127)  
+  
