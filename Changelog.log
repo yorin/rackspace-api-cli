@@ -27,7 +27,7 @@ v1.04 Changelog:
 04/14/2015 - rsdns added -CREATEREG tool used for adding domain records
 04/14/2015 - created ./cache/rs.conf to centralize storing of  USERNAME & APIKEY values, 
              update rsdns and rscloudfiles to it as well.
-
+04/15/2015 - updated README.md file.
 
 rscloufiles requirements:
 =========================
