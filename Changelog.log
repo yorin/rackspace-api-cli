@@ -43,3 +43,7 @@ rsdns requriements:
 - Rackspace api version 1.02
 - USERNAME and APIKEY value stored on .cache/rs.conf
 
+References:
+===========
+http://www.rackspace.com/blog/using-rackspace-dnsaas-with-curl-part-1
+http://docs.rackspace.com/cdns/api/v1.0/cdns-getting-started/content/Service_Access_Endpoints-d1e753.html
