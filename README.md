@@ -2,9 +2,9 @@ rackspace-api-cli
 ===================
 __A collection of cli scripts developed to work with rackspace api__  
 
-~~Disclaimer: This is unofficial, created without Rackspace's official support.~~  
+_Disclaimer: This is unofficial, created without Rackspace's official support._  
 
-~~Note: Insert your Rackspace USERNAME & APIKEY to .cache/rs.conf~~  
+_Note: Insert your Rackspace USERNAME & APIKEY to .cache/rs.conf_  
   
 #rscloudfiles
 
